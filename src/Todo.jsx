@@ -11,16 +11,12 @@ const Todo = () => {
             alert("please Enter Task");
         }
 
-        
-
         else if (
             interestList.some(item=>item.toLowerCase() === Interest.toLowerCase().trim()
             )) {
             alert("Duplicate Interest not allowed");
             setInterest("");
-
         }
-
 
         else {
             setInterestList([...interestList, Interest]);
