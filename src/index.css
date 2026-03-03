@@ -1,3 +1,44 @@
-.outerDiv{
-    background-color: #fff3e0;
+.outerDiv {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+}
+
+input[type="text"] {
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.alert {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #2196F3;
+    border-color: #f5c6cb;
 }
