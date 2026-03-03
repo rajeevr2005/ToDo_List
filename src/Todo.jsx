@@ -1,114 +1,87 @@
 import React, { useState } from 'react';
 
 const Todo = () => {
-    const [Interest, setInterest] = useState("");
+    const [task, setTask] = useState("");  // Renamed Interest to task for clarity
+    const [taskList, setTaskList] = useState([]);
 
-    const [interestList, setInterestList] = useState([]);
-
-    const HandleAdd = () => {
-
-        if (Interest === "") {
-            alert("please Enter Task");
+    const addTask = () => {
+        if (!task.trim()) {
+            alert("Please enter a task.");
+            return;
         }
 
-        else if (
-            interestList.some(item=>item.toLowerCase() === Interest.toLowerCase().trim()
-            )) {
-            alert("Duplicate Interest not allowed");
-            setInterest("");
+        if (taskList.some(existingTask => existingTask.toLowerCase() === task.toLowerCase().trim())) {
+            alert("Duplicate tasks are not allowed.");
+            setTask("");
+            return;
         }
 
-        else {
-            setInterestList([...interestList, Interest]);
-            setInterest("");
+        setTaskList([...taskList, task]);
+        setTask("");
+    };
+
+    const deleteTask = (index) => {
+        setTaskList(taskList.filter((_, i) => i !== index));
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            addTask();
         }
-    }
-
-    const HandleDelete=(index)=>{
-        const updateList=interestList.filter((_,i)=>
-            i !==index)
-        setInterestList(updateList)
-    }
-
+    };
 
     return (
-        <>
-            <div className='container-fluid'>
-                <div className='container d-flex justify-content-center'>
+        <div className="container-fluid py-5">
+            <div className="container d-flex justify-content-center">
+                <div className="col-lg-6 col-md-8 col-sm-10 col-12 outerDiv shadow-sm p-4 rounded">
+                    <div className="text-center mb-4">
+                        <h1 className="display-4">ToDo List</h1>
+                    </div>
 
-                    <div className='col-lg-6 col-md-12 col-12 outerDiv' style={{ border: "1px solid black", padding: "15px" }}>
-
-                        <div className='row'>
-                            <div className='col-12'>
-                                <h1 className='text-center'>ToDo List</h1>
-                            </div>
-                        </div>
-
-                        <div className='row mt-4' >
-                            <div className='col-lg-12 d-flex justify-content-evenly'>
-                                <input type="text" placeholder='Enter Task' value={Interest} onChange={(e) => setInterest(e.target.value)} className='col-7' />
-                                <button type="button" className="btn btn-success col-3" onClick={HandleAdd}>ADD</button>
-                            </div>
-                        </div>
-
-                        <div className='row'>
-                            <div className='col-lg-12'>
-                                {
-                                    interestList.length === 0 ?
-                                        (
-                                            <div>
-                                                <h5 className='mt-3 text-danger text-center' style={{ border: "1px solid black" }}>No Task Available</h5>
-                                            </div>)
-                                        :
-                                        (
-                                            <div className='row d-flex mt-2'>
-                                                <ul>
-                                                    {
-                                                        interestList.map((item, index) => (
-                                                            <li key={index} className='mt-2' style={{ listStyle: "none",border:"1px solid black"}}>
-                                                                <div className='d-flex align-items-center'>
-                                                                <div className='col-8'>
-                                                                   <h3 className='ms-4'> {item} </h3>
-                                                                </div>
-
-                                                                <div className='col-4'>
-                                                                    <button type="button" className="btn btn-danger" onClick={()=>HandleDelete(index)}>Delete</button>
-                                                                </div>
-                                                                </div>
-                                                            </li>
-                                                        ))
-                                                    }
-                                                </ul>
-
-                                            </div>
-                                        )
-
-
-
-                                }
-
-
-
-
-
-
-                            </div>
-
-
+                    <div className="mb-4">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                placeholder="Enter Task"
+                                value={task}
+                                onChange={(e) => setTask(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                className="form-control border-primary rounded-0"
+                            />
+                            <button
+                                type="button"
+                                className="btn btn-success px-4 ms-2 rounded-0"
+                                onClick={addTask}
+                            >
+                                ADD
+                            </button>
                         </div>
                     </div>
 
-
-
+                    {taskList.length === 0 ? (
+                        <div className="alert alert-danger text-center">No Task Available</div>
+                    ) : (
+                        <ul className="list-group">
+                            {taskList.map((item, index) => (
+                                <li
+                                    key={index}
+                                    className="list-group-item d-flex justify-content-between align-items-center mb-2 shadow-sm rounded"
+                                >
+                                    <span>{item}</span>
+                                    <button
+                                        className="btn btn-danger btn-sm"
+                                        onClick={() => deleteTask(index)}
+                                    >
+                                        Delete
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </div>
-
-
-        </>
-    )
-}
+        </div>
+    );
+};
 
 export default Todo;
-
-
-
